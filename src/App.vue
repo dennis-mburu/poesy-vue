@@ -17,6 +17,21 @@ export default {
     PoemsContainer,
     NewPoemForm
 },
+data () {
+  return {
+    poems: []
+  }
+},
+methods: {
+  async fetchPoems (){
+    const res = await fetch(`http://localhost:3002/poems`)
+    const data = await res.json()
+    return data
+  }
+},
+async created (){
+  this.data = await this.fetchPoems()
+}
 };
 </script>
 
