@@ -1,10 +1,12 @@
 <template>
   <div class="app">
     <div class="sidebar">
-      <button>Show/hide new poem form</button>
-      <NewPoemForm />
+      <button @click="this.showPoemForm = !this.showPoemForm">
+        Show/hide new poem form
+      </button>
+      <NewPoemForm v-show="showPoemForm" />
     </div>
-    <PoemsContainer />
+    <PoemsContainer :poems="poems" />
   </div>
 </template>
 
@@ -15,23 +17,28 @@ import NewPoemForm from "./components/NewPoemForm.vue";
 export default {
   components: {
     PoemsContainer,
-    NewPoemForm
-},
-data () {
-  return {
-    poems: []
-  }
-},
-methods: {
-  async fetchPoems (){
-    const res = await fetch(`http://localhost:3002/poems`)
-    const data = await res.json()
-    return data
-  }
-},
-async created (){
-  this.data = await this.fetchPoems()
-}
+    NewPoemForm,
+  },
+  data() {
+    return {
+      poems: [],
+      showPoemForm: false,
+    };
+  },
+  methods: {
+    // togglePoemForm (){
+    //   this.showPoemForm = !this.showPoemForm
+    // },
+
+    async fetchPoems() {
+      const res = await fetch(`http://localhost:3002/poems`);
+      const data = await res.json();
+      return data;
+    },
+  },
+  async created() {
+    this.poems = await this.fetchPoems();
+  },
 };
 </script>
 
@@ -50,9 +57,7 @@ async created (){
   border-right: solid black 1px;
 }
 
-button{
-  width: 100%
+button {
+  width: 100%;
 }
-
-
 </style>
