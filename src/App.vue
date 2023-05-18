@@ -34,14 +34,21 @@ export default {
       this.poems = this.poems.filter((poem) => poem.id !== id);
     },
 
-    async fetchPoems() {
-      const res = await fetch(`http://localhost:3002/poems`);
-      const data = await res.json();
-      return data;
-    },
+    // async fetchPoems() {
+    //   const res = await fetch(`http://localhost:3002/poems`);
+    //   const data = await res.json();
+    //   return data;
+    // },
+    
   },
-  async created() {
-    this.poems = await this.fetchPoems();
+
+  // async created() {
+  //   this.poems = await this.fetchPoems();
+  // },
+  created() {
+    fetch("http://localhost:3002/poems")
+      .then((res) => res.json())
+      .then((data) => (this.poems = data));
   },
 };
 </script>

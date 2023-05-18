@@ -5,7 +5,9 @@
     <p>
       <strong>- By {{ poem.author }}</strong>
     </p>
-    <button>Mark as {{ poem.readstatus ? "unread" : "read" }}</button>
+    <button @click="this.readstatus = !this.readstatus">
+      Mark as {{ readstatus ? "unread" : "read" }}
+    </button>
     <button @click="handleDelete(poem.id)" style="float: right">
       Delete Poem
     </button>
@@ -15,6 +17,11 @@
 <script>
 export default {
   props: ["poem"],
+  data() {
+    return {
+      readstatus: true,
+    };
+  },
   methods: {
     async handleDelete(id) {
       // this can work too without passing the poem.id on
