@@ -1,18 +1,56 @@
 <template>
-  <form class="new-poem-form">
-    <input type="text" name="title" placeholder="Title" />
-    <input type="text" name="author" placeholder="Author" />
+  <form class="new-poem-form" @submit="handleSubmit">
+    <input type="text" name="title" placeholder="Title" v-model="title"/>
+    <input type="text" name="author" placeholder="Author" v-model="author"/>
     <textarea
       name="content"
       rows="10"
+      v-model="content"
       placeholder="Share your masterpiece here..."
     ></textarea>
     <input type="submit" value="Share your masterpiece" />
   </form>
+  <!-- {{ console.log(this) }} -->
 </template>
 
 <script>
-export default {};
+export default {
+  data(){
+    return {
+      title: "",
+      author: '',
+      content: "",
+    }
+  },
+  methods: {
+    handleSubmit(e){
+      e.preventDefault()
+
+      const newPoem = {
+        title: this.title,
+        author: this.author,
+        content: this.content
+      }
+
+      fetch('http://localhost:3002/poems', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newPoem)
+      })
+      .then(res => res.json())
+      .then(data => this.$emit('add-newPoem', data))
+
+
+      // console.log(newTask)
+
+      this.title = "",
+      this.author = '',
+      this.content = ""
+    },
+  }
+};
 </script>
 
 <style scoped>

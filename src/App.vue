@@ -4,7 +4,7 @@
       <button @click="this.showPoemForm = !this.showPoemForm">
         Show/hide new poem form
       </button>
-      <NewPoemForm v-show="showPoemForm" />
+      <NewPoemForm v-show="showPoemForm" @add-newPoem="addNewPoem"/>
     </div>
     <PoemsContainer :poems="poems" />
   </div>
@@ -29,6 +29,10 @@ export default {
     // togglePoemForm (){
     //   this.showPoemForm = !this.showPoemForm
     // },
+
+    addNewPoem(newPoem){
+      this.poems = [...this.poems, newPoem]
+    },
 
     async fetchPoems() {
       const res = await fetch(`http://localhost:3002/poems`);

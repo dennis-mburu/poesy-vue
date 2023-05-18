@@ -1,6 +1,5 @@
 <template>
   <div class="poems-container">
-    <h1>Poems Container</h1>
     <div v-for="poem in poems" :key="poem.id">
       <Poem :poem="poem" />
     </div>
