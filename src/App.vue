@@ -4,9 +4,9 @@
       <button @click="this.showPoemForm = !this.showPoemForm">
         Show/hide new poem form
       </button>
-      <NewPoemForm v-show="showPoemForm" @add-newPoem="addNewPoem"/>
+      <NewPoemForm v-show="showPoemForm" @add-newPoem="addNewPoem" />
     </div>
-    <PoemsContainer :poems="poems" />
+    <PoemsContainer :poems="poems" @delete-poem="handlePoemDelete" />
   </div>
 </template>
 
@@ -26,12 +26,12 @@ export default {
     };
   },
   methods: {
-    // togglePoemForm (){
-    //   this.showPoemForm = !this.showPoemForm
-    // },
+    addNewPoem(newPoem) {
+      this.poems = [...this.poems, newPoem];
+    },
 
-    addNewPoem(newPoem){
-      this.poems = [...this.poems, newPoem]
+    handlePoemDelete(id) {
+      this.poems = this.poems.filter((poem) => poem.id !== id);
     },
 
     async fetchPoems() {
